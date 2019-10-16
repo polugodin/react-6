@@ -1,24 +1,20 @@
 import { useReducer } from 'react';
 
-const init = initialCount => {
-  return { count: initialCount };
-};
-
-const reducer = (state, action) => {
+const reducer = (count, action) => {
   switch (action.type) {
     case 'increment':
-      return { count: state.count + 1 };
+      return count + 1;
     case 'decrement':
-      return { count: state.count - 1 };
+      return count - 1;
     case 'reset':
-      return init(action.payload);
+      return action.payload;
     default:
       throw new Error('action type err');
   }
 };
 
 const useCounter = initialCount => {
-  const [state, dispatch] = useReducer(reducer, initialCount, init);
+  const [count, dispatch] = useReducer(reducer, initialCount);
 
   const setStateMethods = {
     increment: () => {
@@ -32,7 +28,7 @@ const useCounter = initialCount => {
     }
   };
 
-  return [state.count, setStateMethods];
+  return [count, setStateMethods];
 };
 
 export default useCounter;
